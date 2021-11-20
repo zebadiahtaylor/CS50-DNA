@@ -4,7 +4,7 @@ import csv
 
 """
 written by zebadiah taylor for cs50 on 9/17/20 and is designed for the CS50 IDE.
-Reads through a found dna sequence (in .txt) and tests it against a known database(CSV)
+Reads through a found dna sequence (in .txt) and tests it against a known samples (in a .csv)
 Program is dynamic, and will adapt to any number of STR fields.
 
 test commands
@@ -15,7 +15,7 @@ python dna.py databases/large.csv sequences/18.txt          Expected Output: No 
 
 # checks for the correct number of arguments.
 if not len(argv) == 3:
-    print("To Try Again, try typing:\n python dna.py __person_databases__.csv sequences/number.txt\nAlso, don't be an ass: Wear the mask. ")
+    print("To try again, try typing:\n python dna.py __person_databases__.csv sequences/number.txt")
     exit()
 
 # opens dna databases to read
@@ -48,19 +48,19 @@ with open(argv[1], newline='') as dna_db:
                     max_str_count = str_count
                 # and then resets str_count
                 str_count = 0
-        # NOTE it could be easier to check each value here. But let's try learning more tricks with Dictreader.
         # stores STR max_counts into a list to check with.
         unknown_dna_sample.append(max_str_count)
     # var only used to output if no match is found.
     match_found = False
     # Once the STR counts from the found DNA sequence have been read into unknown_dna_sample
     # iterates through DNA databases and checks values.
-    # Currently breaks when match is found. For safety, consider changing.
+
     for row in reader:
         str_count_match = 0
         for cell in range(len(reader.fieldnames)):
             if str(unknown_dna_sample[cell]) == str(row[reader.fieldnames[cell]]):
                 str_count_match += 1
+                
         # checks if str_count_matches == number of possible matches
         # if so, we have the culprit! I mean, suspect.
         if str_count_match == len(reader.fieldnames) - 1:
